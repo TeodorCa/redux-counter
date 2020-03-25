@@ -1,24 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// useDispatch is used for dispatching an action
+import { useSelector, useDispatch } from 'react-redux'
+import { increment } from './actions'
+import { decrement } from './actions'
+import { logState } from './actions'
 
 function App() {
+  const counter = useSelector(state => state.counter);
+  const isLogged = useSelector(state => state.isLogged);
+  const dispatch = useDispatch();
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+       {isLogged
+       ? <button onClick={() => dispatch(logState())}>Logout</button>
+       : <button onClick={() => dispatch(logState())}>Login</button>
+       }
+       <h1>Redux functionality using React-Redux</h1>
+       <h2>Counter : {counter}</h2>
+       <button onClick={() => dispatch(increment())}>+</button>
+       <button onClick={() => dispatch(decrement())}>-</button>
+
+       {isLogged
+        ? <a href="https://www.youtube.com/watch?v=MVvXUinj1R8">Watch this</a>
+        : <h3>For finding the meaning of life, please login</h3>
+        }
+       
     </div>
   );
 }
